@@ -4,7 +4,7 @@ on: push
 
 jobs:
   market_action:
-    runs-on: ububtu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: checkout code from repository action
         uses: actions/checkout@v4
