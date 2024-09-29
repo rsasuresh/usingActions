@@ -1,0 +1,41 @@
+name: passing arguments to actions
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu
+    steps:
+      - name: checkout code file
+        uses: actions/checkout@v4
+      - name: list java files and versions
+        run: |
+          ls -ltr
+          java -version
+
+      - name: checkout tomcat
+        uses: actions/checkout@v4
+        with:
+          repository: apache/tomcat
+          ref: main
+          path: ./tomcat
+
+      - name: set up java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "9.0.4"
+          java-package: jdk
+          architecture: x64
+
+      - name: list project files and java version
+        run: |
+          ls -ltr
+          java -version
+
+      - name: copy tomcat users.xml to tomcat users home directory
+        run: cp -v tomcat-users.xml ./tomcat/conf/tomcat-users.xml
+
+      - name: compile tomcat
+        run: |
+          cd ./tomcat
+          ant
